@@ -25,11 +25,11 @@ jobs:
             git pull origin web_dev
 
             # 3. Stop and remove the existing container (ignore error if it doesn't exist)
-            docker stop wpoms-web-jerin-starter || true
-            docker rm wpoms-web-jerin-starter || true
+            sudo docker stop wpoms-web-jerin-starter || true
+            sudo docker rm wpoms-web-jerin-starter || true
 
             # 4. Build the new image
-            docker build -t wpoms-web-jerin-starter .
+            sudo docker build -t wpoms-web-jerin-starter .
 
             # 5. Run the new container
-            docker run -d --name wpoms-web-jerin-starter -p 7777:8081 wpoms-web-starter
+            sudo docker run -d --name wpoms-web-jerin-starter -p 7777:8081 wpoms-web-starter
