@@ -32,4 +32,4 @@ jobs:
             sudo docker build -t wpoms-web-jerin-starter .
 
             # 5. Run the new container
-            sudo docker run -d --name wpoms-web-jerin-starter -p 7777:8081 wpoms-web-starter
+            sudo docker run -d --name wpoms-web-jerin-starter -p 7777:8081 wpoms-web-jerin-starter
