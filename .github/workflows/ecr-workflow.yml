@@ -2,7 +2,7 @@ name: Build, Push to ECR, and Deploy to EC2
 
 on:
   push:
-    branches: [ "main2" ] # Triggers the workflow whenever you push to the main branch
+    branches: [ "main" ] # Triggers the workflow whenever you push to the main branch
 
 env:
   AWS_REGION: eu-north-1                 # Replace with your AWS region
@@ -23,8 +23,8 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets::AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets::AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Log in to Amazon ECR
