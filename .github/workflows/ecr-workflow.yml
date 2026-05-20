@@ -5,8 +5,8 @@ on:
     branches: [ "web_dev" ] # Triggers the workflow whenever you push to the main branch
 
 env:
-  AWS_REGION: eu-north-1                 # Replace with your AWS region
-  ECR_REPOSITORY: jerin/wpoms-web-starter  # Replace with your ECR repository name
+  AWS_REGION: ap-south-1                # Replace with your AWS region
+  ECR_REPOSITORY: wpoms/wpoms-web-starter  # Replace with your ECR repository name
   CONTAINER_NAME: wpoms-web-starter       # What you want to name the running container on EC2
   APP_PORT: 3003                         # The port your app runs on inside the container
   HOST_PORT: 3003                         # The port you want to expose on your EC2 instance
