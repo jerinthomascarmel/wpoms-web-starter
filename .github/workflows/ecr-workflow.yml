@@ -1,0 +1,47 @@
+name: Build, Push to ECR, and Deploy to EC2
+
+on:
+  push:
+    branches: [ "main2" ] # Triggers the workflow whenever you push to the main branch
+
+env:
+  AWS_REGION: eu-north-1                 # Replace with your AWS region
+  ECR_REPOSITORY: jerin/wpoms-web-starter  # Replace with your ECR repository name
+  CONTAINER_NAME: wpoms-web-starter       # What you want to name the running container on EC2
+  APP_PORT: 8080                         # The port your app runs on inside the container
+  HOST_PORT: 80                          # The port you want to expose on your EC2 instance
+
+jobs:
+  build-and-push:
+    name: Build & Push to ECR
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets::AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets::AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build, Tag, and Push Image to ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }} # Uses the commit hash as the unique image tag
+      run: |
+        # Build the docker container
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Also tag it as 'latest' so the EC2 script can always pull the newest version easily
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        
+        # Push both tags to ECR
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
