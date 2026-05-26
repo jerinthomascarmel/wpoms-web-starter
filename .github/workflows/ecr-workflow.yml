@@ -2,7 +2,7 @@ name: Build, Push to ECR, and Deploy to EC2
 
 on:
   push:
-    branches: [ "web_dev" ] # Triggers the workflow whenever you push to the main branch
+    branches: [ "main" ] # Triggers the workflow whenever you push to the main branch
 
 env:
   AWS_REGION: ap-south-1                # Replace with your AWS region
