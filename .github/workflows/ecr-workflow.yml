@@ -91,11 +91,6 @@ jobs:
             --name ${{ env.CONTAINER_NAME }} \
             -p ${{ env.HOST_PORT }}:${{ env.APP_PORT }} \
             --restart always \
-            --log-driver=awslogs \
-            --log-opt awslogs-region=${{ env.AWS_REGION }} \
-            --log-opt awslogs-group=wpoms-web-starter-logs \
-            --log-opt awslogs-stream=${{ env.CONTAINER_NAME }} \
-            --log-opt awslogs-create-group=true \
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           
             
